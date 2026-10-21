@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,7 @@ import { useLogin } from "@/features/auth/use-login";
 
 export function LoginForm() {
   const login = useLogin();
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -24,7 +26,11 @@ export function LoginForm() {
   });
 
   function onSubmit(values: LoginInput) {
-    login.mutate(values);
+    login.mutate(values, {
+      onSuccess: () => {
+        router.replace("/feed");
+      },
+    });
   }
 
   const serverError =
