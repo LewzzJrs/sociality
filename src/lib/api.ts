@@ -32,7 +32,7 @@ export async function apiFetch<T>(
 
   if (!res.ok || !body) {
     throw new ApiError(
-      body?.message ?? "Terjadi kesalahan pada server. Coba lagi nanti.",
+      body?.message ?? "Something went wrong. Please try again later.",
       res.status
     );
   }
