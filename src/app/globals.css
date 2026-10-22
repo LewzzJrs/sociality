@@ -4,12 +4,61 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --color-neutral-25: #FDFDFD;
+  --color-neutral-50: #FAFAFA;
+  --color-neutral-100: #F5F5F5;
+  --color-neutral-200: #E9EAEB;
+  --color-neutral-300: #D5D7DA;
+  --color-neutral-400: #A4A7AE;
+  --color-neutral-500: #717680;
+  --color-neutral-600: #535862;
+  --color-neutral-700: #414651;
+  --color-neutral-800: #252B37;
+  --color-neutral-900: #181D27;
+  --color-neutral-950: #0A0D12;
+
+  --color-primary-100: #F6F9FE;
+  --color-primary-200: #7F51F9;
+  --color-primary-300: #6936F2;
+
+  --color-accent-red: #B41759;
+  --color-accent-green: #079455;
+  --color-accent-yellow: #FDB022;
+
+  --text-display-3xl: 3.75rem;
+  --text-display-3xl--line-height: 4.5rem;
+  --text-display-2xl: 3rem;
+  --text-display-2xl--line-height: 3.75rem;
+  --text-display-xl: 2.5rem;
+  --text-display-xl--line-height: 3rem;
+  --text-display-lg: 2.25rem;
+  --text-display-lg--line-height: 2.75rem;
+  --text-display-md: 2rem;
+  --text-display-md--line-height: 2.5rem;
+  --text-display-sm: 1.75rem;
+  --text-display-sm--line-height: 2.375rem;
+  --text-display-xs: 1.5rem;
+  --text-display-xs--line-height: 2.25rem;
+
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 2.125rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 2rem;
+  --text-md: 1rem;
+  --text-md--line-height: 1.875rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.75rem;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.5rem;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: "SF Pro", -apple-system, BlinkMacSystemFont, var(--font-inter), sans-serif;
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: "SF Pro", -apple-system, BlinkMacSystemFont, var(--font-inter), sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -42,31 +91,32 @@
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.25rem;
+  --radius-4xl: 1.5rem;
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  color-scheme: dark;
+  --background: #000000;
+  --foreground: #FDFDFD;
+  --card: #0A0D12;
+  --card-foreground: #FDFDFD;
+  --popover: #0A0D12;
+  --popover-foreground: #FDFDFD;
+  --primary: #6936F2;
+  --primary-foreground: #FDFDFD;
+  --secondary: #0A0D12;
+  --secondary-foreground: #FDFDFD;
+  --muted: #0A0D12;
+  --muted-foreground: #A4A7AE;
+  --accent: #181D27;
+  --accent-foreground: #FDFDFD;
+  --destructive: #B41759;
+  --border: #181D27;
+  --input: #181D27;
+  --ring: #7F51F9;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
