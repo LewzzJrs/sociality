@@ -13,6 +13,18 @@ import { ApiError } from "@/lib/api";
 import { loginSchema, type LoginInput } from "@/features/auth/schema";
 import { useLogin } from "@/features/auth/use-login";
 
+function getReturnTo() {
+  const returnTo = new URLSearchParams(window.location.search).get("returnTo");
+  const origin = window.location.origin;
+
+  if (!returnTo || !URL.canParse(returnTo, origin)) return "/feed";
+
+  const url = new URL(returnTo, origin);
+  if (url.origin !== origin) return "/feed";
+
+  return url.pathname + url.search;
+}
+
 export function LoginForm() {
   const login = useLogin();
   const router = useRouter();
@@ -28,7 +40,7 @@ export function LoginForm() {
   function onSubmit(values: LoginInput) {
     login.mutate(values, {
       onSuccess: () => {
-        router.replace("/feed");
+        router.replace(getReturnTo());
       },
     });
   }

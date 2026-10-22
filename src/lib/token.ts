@@ -1,4 +1,4 @@
-const TOKEN_KEY = "sociality_token";
+export const TOKEN_KEY = "sociality_token";
 const MAX_AGE = 60 * 60 * 24 * 7;
 
 export function getToken(): string | null {
