@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Bookmark, Heart, MessageSquare } from "lucide-react";
+import { Bookmark, MessageSquare } from "lucide-react";
 import { UserAvatar } from "@/components/user-avatar";
-import { cn } from "@/lib/utils";
+import { LikeButton } from "@/features/posts/like-button";
 import { PostCaption } from "@/features/posts/post-caption";
 import { ShareButton } from "@/features/posts/share-button";
 import { fromNow } from "@/lib/date";
@@ -44,22 +44,7 @@ export function PostCard({ post }: { post: Post }) {
 
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <button
-            type="button"
-            aria-pressed={post.likedByMe}
-            className="flex items-center gap-1.5"
-          >
-            <Heart
-              className={cn(
-                "size-6",
-                post.likedByMe && "fill-accent-red text-accent-red"
-              )}
-            />
-            <span className="sr-only">Like</span>
-            <span className="text-md font-semibold tracking-[-0.02em]">
-              {post.likeCount}
-            </span>
-          </button>
+          <LikeButton post={post} />
           <Link
             href={`/posts/${post.id}`}
             className="flex items-center gap-1.5"
