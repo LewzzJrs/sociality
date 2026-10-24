@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { AddPostForm } from "@/features/posts/add-post-form";
+
+export const metadata: Metadata = {
+  title: "Add Post | Sociality",
+};
 
 export default function NewPostPage() {
   return (

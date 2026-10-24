@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { EditProfileForm } from "@/features/profile/edit-profile-form";
+
+export const metadata: Metadata = {
+  title: "Edit Profile | Sociality",
+};
 
 export default function EditProfilePage() {
   return (
