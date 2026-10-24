@@ -1,11 +1,13 @@
-import {
-  useMutation,
-  useQueryClient,
-  type InfiniteData,
-} from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { apiFetch } from "@/lib/api";
-import type { FeedData, Post } from "@/types/api";
+import {
+  postKey,
+  restorePostCaches,
+  snapshotPostCaches,
+  updatePostInCaches,
+} from "@/features/posts/post-cache";
+import type { Post } from "@/types/api";
 
 type ToggleLikeInput = {
   postId: number;
@@ -30,35 +32,17 @@ export function useToggleLike() {
         method: liked ? "POST" : "DELETE",
       }),
     onMutate: async ({ postId, liked }) => {
-      await queryClient.cancelQueries({ queryKey: ["feed"] });
-      const previousFeed = queryClient.getQueryData<InfiniteData<FeedData>>([
-        "feed",
-      ]);
-
-      queryClient.setQueryData<InfiniteData<FeedData>>(["feed"], (old) =>
-        old
-          ? {
-              ...old,
-              pages: old.pages.map((page) => ({
-                ...page,
-                items: page.items.map((post) =>
-                  post.id === postId ? applyLike(post, liked) : post
-                ),
-              })),
-            }
-          : old
-      );
-
-      return { previousFeed };
+      const snapshot = await snapshotPostCaches(queryClient, postId);
+      updatePostInCaches(queryClient, postId, (post) => applyLike(post, liked));
+      return { snapshot };
     },
-    onError: (_error, _input, context) => {
-      if (context?.previousFeed) {
-        queryClient.setQueryData(["feed"], context.previousFeed);
-      }
+    onError: (_error, { postId }, context) => {
+      restorePostCaches(queryClient, postId, context?.snapshot);
       toast.error("Failed to update like. Please try again.");
     },
     onSettled: (_data, _error, { postId }) => {
       queryClient.invalidateQueries({ queryKey: ["feed"] });
+      queryClient.invalidateQueries({ queryKey: postKey(postId) });
       queryClient.invalidateQueries({ queryKey: ["post-likes", postId] });
       queryClient.invalidateQueries({ queryKey: ["me"] });
     },
