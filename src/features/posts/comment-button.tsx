@@ -21,7 +21,12 @@ export function CommentButton({ post }: { post: Post }) {
           {post.commentCount}
         </span>
       </button>
-      <PostDetailDialog post={post} open={isOpen} onOpenChange={setIsOpen} />
+      <PostDetailDialog
+        postId={post.id}
+        initialPost={post}
+        open={isOpen}
+        onOpenChange={setIsOpen}
+      />
     </>
   );
 }

@@ -67,8 +67,8 @@ export type FeedData = {
 
 export type UserListItem = PostAuthor & {
   isFollowedByMe: boolean;
-  isMe: boolean;
-  followsMe: boolean;
+  isMe?: boolean;
+  followsMe?: boolean;
 };
 
 export type UserListData = {
@@ -92,5 +92,10 @@ export type Comment = {
 
 export type CommentsData = {
   comments: Comment[];
+  pagination: Pagination;
+};
+
+export type PostsData = {
+  posts: Post[];
   pagination: Pagination;
 };

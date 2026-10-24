@@ -9,9 +9,9 @@ import { CloudUpload, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { ACCEPTED_IMAGE_TYPES, readImagePreview } from "@/lib/image-file";
 import { cn } from "@/lib/utils";
 import {
-  ACCEPTED_IMAGE_TYPES,
   createPostSchema,
   type CreatePostInput,
 } from "@/features/posts/schema";
@@ -39,13 +39,7 @@ export function AddPostForm() {
 
     setValue("image", file, { shouldValidate: true });
     setPreviewUrl(null);
-    if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === "string") setPreviewUrl(reader.result);
-    };
-    reader.readAsDataURL(file);
+    readImagePreview(file, setPreviewUrl);
   }
 
   function removeImage() {
