@@ -75,3 +75,10 @@ export type UserListData = {
   users: UserListItem[];
   pagination: Pagination;
 };
+
+export type SavedPost = Pick<Post, "id" | "imageUrl" | "caption" | "createdAt">;
+
+export type SavedPostsData = {
+  posts: SavedPost[];
+  pagination: Pagination;
+};

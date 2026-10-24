@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Bookmark, MessageSquare } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import { UserAvatar } from "@/components/user-avatar";
 import { LikeButton } from "@/features/posts/like-button";
 import { PostCaption } from "@/features/posts/post-caption";
+import { SaveButton } from "@/features/posts/save-button";
 import { ShareButton } from "@/features/posts/share-button";
 import { fromNow } from "@/lib/date";
 import type { Post } from "@/types/api";
@@ -57,10 +58,7 @@ export function PostCard({ post }: { post: Post }) {
           </Link>
           <ShareButton postId={post.id} />
         </div>
-        <button type="button">
-          <Bookmark className="size-6" />
-          <span className="sr-only">Save</span>
-        </button>
+        <SaveButton postId={post.id} />
       </div>
 
       {post.caption && (
