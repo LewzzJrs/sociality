@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { LogOut, User } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UserAvatar } from "@/components/user-avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,12 +34,11 @@ export function UserMenu() {
         aria-label="Account menu"
         className="flex items-center gap-3.25 rounded-full outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
       >
-        <Avatar className="size-10 md:size-12">
-          <AvatarImage src={profile.avatarUrl ?? undefined} alt="" />
-          <AvatarFallback className="bg-neutral-900 text-md font-bold text-foreground">
-            {profile.name.charAt(0).toUpperCase()}
-          </AvatarFallback>
-        </Avatar>
+        <UserAvatar
+          name={profile.name}
+          avatarUrl={profile.avatarUrl}
+          className="size-10 md:size-12"
+        />
         <span className="hidden text-md font-bold tracking-[-0.02em] md:inline">
           {profile.name}
         </span>

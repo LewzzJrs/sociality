@@ -34,3 +34,51 @@ export type MeData = {
   profile: Profile;
   stats: ProfileStats;
 };
+
+export type PostAuthor = {
+  id: number;
+  username: string;
+  name: string;
+  avatarUrl: string | null;
+};
+
+export type Post = {
+  id: number;
+  imageUrl: string;
+  caption: string | null;
+  createdAt: string;
+  author: PostAuthor;
+  likeCount: number;
+  commentCount: number;
+  likedByMe: boolean;
+};
+
+export type Pagination = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+};
+
+export type FeedData = {
+  items: Post[];
+  pagination: Pagination;
+};
+
+export type UserListItem = PostAuthor & {
+  isFollowedByMe: boolean;
+  isMe: boolean;
+  followsMe: boolean;
+};
+
+export type UserListData = {
+  users: UserListItem[];
+  pagination: Pagination;
+};
+
+export type SavedPost = Pick<Post, "id" | "imageUrl" | "caption" | "createdAt">;
+
+export type SavedPostsData = {
+  posts: SavedPost[];
+  pagination: Pagination;
+};
