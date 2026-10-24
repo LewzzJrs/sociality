@@ -28,11 +28,12 @@ export async function apiFetch<T>(
   options: RequestInit = {}
 ): Promise<T> {
   const token = getToken();
+  const isFormData = options.body instanceof FormData;
 
   const res = await fetch(`${BASE_URL}${path}`, {
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      ...(isFormData ? {} : { "Content-Type": "application/json" }),
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options.headers,
     },

@@ -13,6 +13,8 @@ export function BottomMenu() {
   const isHome = pathname.startsWith("/feed");
   const isProfile = pathname.startsWith("/me");
 
+  if (pathname === "/posts/new") return null;
+
   return (
     <nav
       aria-label="Main"
