@@ -10,15 +10,19 @@ import {
 } from "@/components/ui/dialog";
 import { UserAvatar } from "@/components/user-avatar";
 import { FollowButton } from "@/features/profile/follow-button";
-import { usePostLikes } from "@/features/posts/use-post-likes";
+import { useUserList } from "@/features/users/use-user-list";
 
-type LikesDialogProps = {
-  postId: number;
+type UserListDialogProps = {
+  title: string;
+  description: string;
+  path: string;
+  emptyTitle: string;
+  emptyDescription: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };
 
-function LikeRowSkeleton() {
+function UserRowSkeleton() {
   return (
     <div className="flex animate-pulse items-center gap-2" aria-hidden="true">
       <div className="size-12 rounded-full bg-neutral-900" />
@@ -30,7 +34,15 @@ function LikeRowSkeleton() {
   );
 }
 
-export function LikesDialog({ postId, open, onOpenChange }: LikesDialogProps) {
+export function UserListDialog({
+  title,
+  description,
+  path,
+  emptyTitle,
+  emptyDescription,
+  open,
+  onOpenChange,
+}: UserListDialogProps) {
   const {
     data,
     isPending,
@@ -39,29 +51,27 @@ export function LikesDialog({ postId, open, onOpenChange }: LikesDialogProps) {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = usePostLikes(postId, open);
+  } = useUserList(path, open);
 
   const users = data?.pages.flatMap((page) => page.users) ?? [];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-137 gap-5 rounded-2xl border border-neutral-900 bg-neutral-950 p-5 ring-0 sm:max-w-137">
-        <DialogTitle className="text-xl font-bold">Likes</DialogTitle>
-        <DialogDescription className="sr-only">
-          People who liked this post
-        </DialogDescription>
+        <DialogTitle className="text-xl font-bold">{title}</DialogTitle>
+        <DialogDescription className="sr-only">{description}</DialogDescription>
 
         <div className="-mr-2 flex max-h-[60vh] flex-col gap-5 overflow-y-auto pr-2">
           {isPending ? (
             <>
-              <LikeRowSkeleton />
-              <LikeRowSkeleton />
-              <LikeRowSkeleton />
+              <UserRowSkeleton />
+              <UserRowSkeleton />
+              <UserRowSkeleton />
             </>
           ) : isError && !data ? (
             <div className="flex flex-col items-center gap-3 py-6 text-center">
               <p className="text-sm tracking-[-0.02em] text-neutral-400">
-                Failed to load likes.
+                Failed to load this list.
               </p>
               <Button
                 variant="outline"
@@ -74,10 +84,10 @@ export function LikesDialog({ postId, open, onOpenChange }: LikesDialogProps) {
           ) : users.length === 0 ? (
             <div className="flex flex-col items-center gap-1 py-6 text-center">
               <p className="text-md font-bold tracking-[-0.02em]">
-                No likes yet
+                {emptyTitle}
               </p>
               <p className="text-sm tracking-[-0.02em] text-neutral-400">
-                Be the first to like this post.
+                {emptyDescription}
               </p>
             </div>
           ) : (

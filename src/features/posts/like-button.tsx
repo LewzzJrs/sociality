@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { LikesDialog } from "@/features/posts/likes-dialog";
 import { useToggleLike } from "@/features/posts/use-toggle-like";
+import { UserListDialog } from "@/features/users/user-list-dialog";
 import type { Post } from "@/types/api";
 
 export function LikeButton({ post }: { post: Post }) {
@@ -37,8 +37,12 @@ export function LikeButton({ post }: { post: Post }) {
         {post.likeCount}
         <span className="sr-only"> likes, show who liked this post</span>
       </button>
-      <LikesDialog
-        postId={post.id}
+      <UserListDialog
+        title="Likes"
+        description="People who liked this post"
+        path={`/api/posts/${post.id}/likes`}
+        emptyTitle="No likes yet"
+        emptyDescription="Be the first to like this post."
         open={isLikesOpen}
         onOpenChange={setIsLikesOpen}
       />

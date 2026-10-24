@@ -7,6 +7,7 @@ import {
   snapshotPostCaches,
   updatePostInCaches,
 } from "@/features/posts/post-cache";
+import { userListKey } from "@/features/users/use-user-list";
 import type { Post } from "@/types/api";
 
 type ToggleLikeInput = {
@@ -43,7 +44,9 @@ export function useToggleLike() {
     onSettled: (_data, _error, { postId }) => {
       queryClient.invalidateQueries({ queryKey: ["feed"] });
       queryClient.invalidateQueries({ queryKey: postKey(postId) });
-      queryClient.invalidateQueries({ queryKey: ["post-likes", postId] });
+      queryClient.invalidateQueries({
+        queryKey: userListKey(`/api/posts/${postId}/likes`),
+      });
       queryClient.invalidateQueries({ queryKey: ["me"] });
     },
   });

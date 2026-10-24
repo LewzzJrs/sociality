@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/api";
 import type { CreatePostInput } from "@/features/posts/schema";
+import { MY_POSTS_KEY } from "@/features/profile/use-my-posts";
 import type { Post } from "@/types/api";
 
 export function useCreatePost() {
@@ -17,6 +18,7 @@ export function useCreatePost() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["feed"] });
       queryClient.invalidateQueries({ queryKey: ["me"] });
+      queryClient.invalidateQueries({ queryKey: MY_POSTS_KEY });
     },
   });
 }
