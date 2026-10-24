@@ -57,8 +57,10 @@ export function useToggleLike() {
       }
       toast.error("Failed to update like. Please try again.");
     },
-    onSettled: () => {
+    onSettled: (_data, _error, { postId }) => {
       queryClient.invalidateQueries({ queryKey: ["feed"] });
+      queryClient.invalidateQueries({ queryKey: ["post-likes", postId] });
+      queryClient.invalidateQueries({ queryKey: ["me"] });
     },
   });
 }

@@ -35,7 +35,6 @@ export type MeData = {
   stats: ProfileStats;
 };
 
-
 export type PostAuthor = {
   id: number;
   username: string;
@@ -63,5 +62,16 @@ export type Pagination = {
 
 export type FeedData = {
   items: Post[];
+  pagination: Pagination;
+};
+
+export type UserListItem = PostAuthor & {
+  isFollowedByMe: boolean;
+  isMe: boolean;
+  followsMe: boolean;
+};
+
+export type UserListData = {
+  users: UserListItem[];
   pagination: Pagination;
 };
