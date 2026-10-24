@@ -6,7 +6,8 @@ import {
 import { toast } from "sonner";
 import { apiFetch } from "@/lib/api";
 import { USER_LISTS_KEY } from "@/features/users/use-user-list";
-import type { UserListData } from "@/types/api";
+import { userProfileKey } from "@/features/users/use-user-profile";
+import type { UserListData, UserProfile } from "@/types/api";
 
 type ToggleFollowInput = {
   username: string;
@@ -22,10 +23,32 @@ export function useToggleFollow() {
         method: follow ? "POST" : "DELETE",
       }),
     onMutate: async ({ username, follow }) => {
-      await queryClient.cancelQueries({ queryKey: USER_LISTS_KEY });
+      await Promise.all([
+        queryClient.cancelQueries({ queryKey: USER_LISTS_KEY }),
+        queryClient.cancelQueries({ queryKey: userProfileKey(username) }),
+      ]);
       const previousLists = queryClient.getQueriesData<
         InfiniteData<UserListData>
       >({ queryKey: USER_LISTS_KEY });
+      const previousProfile = queryClient.getQueryData<UserProfile>(
+        userProfileKey(username)
+      );
+
+      queryClient.setQueryData<UserProfile>(userProfileKey(username), (old) =>
+        old && old.isFollowing !== follow
+          ? {
+              ...old,
+              isFollowing: follow,
+              counts: {
+                ...old.counts,
+                followers: Math.max(
+                  0,
+                  old.counts.followers + (follow ? 1 : -1)
+                ),
+              },
+            }
+          : old
+      );
 
       queryClient.setQueriesData<InfiniteData<UserListData>>(
         { queryKey: USER_LISTS_KEY },
@@ -45,16 +68,21 @@ export function useToggleFollow() {
             : old
       );
 
-      return { previousLists };
+      return { previousLists, previousProfile };
     },
-    onError: (_error, _input, context) => {
+    onError: (_error, { username }, context) => {
       context?.previousLists.forEach(([queryKey, data]) => {
         queryClient.setQueryData(queryKey, data);
       });
+      queryClient.setQueryData(
+        userProfileKey(username),
+        context?.previousProfile
+      );
       toast.error("Failed to update follow. Please try again.");
     },
-    onSettled: () => {
+    onSettled: (_data, _error, { username }) => {
       queryClient.invalidateQueries({ queryKey: USER_LISTS_KEY });
+      queryClient.invalidateQueries({ queryKey: userProfileKey(username) });
       queryClient.invalidateQueries({ queryKey: ["me"] });
       queryClient.invalidateQueries({ queryKey: ["feed"] });
     },
