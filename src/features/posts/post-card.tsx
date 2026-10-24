@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MessageSquare } from "lucide-react";
 import { UserAvatar } from "@/components/user-avatar";
+import { CommentButton } from "@/features/posts/comment-button";
 import { LikeButton } from "@/features/posts/like-button";
 import { PostCaption } from "@/features/posts/post-caption";
 import { SaveButton } from "@/features/posts/save-button";
@@ -46,16 +46,7 @@ export function PostCard({ post }: { post: Post }) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <LikeButton post={post} />
-          <Link
-            href={`/posts/${post.id}`}
-            className="flex items-center gap-1.5"
-          >
-            <MessageSquare className="size-6" />
-            <span className="sr-only">Comments</span>
-            <span className="text-md font-semibold tracking-[-0.02em]">
-              {post.commentCount}
-            </span>
-          </Link>
+          <CommentButton post={post} />
           <ShareButton postId={post.id} />
         </div>
         <SaveButton postId={post.id} />

@@ -82,3 +82,15 @@ export type SavedPostsData = {
   posts: SavedPost[];
   pagination: Pagination;
 };
+
+export type Comment = {
+  id: number;
+  text: string;
+  createdAt: string;
+  author: PostAuthor;
+};
+
+export type CommentsData = {
+  comments: Comment[];
+  pagination: Pagination;
+};
