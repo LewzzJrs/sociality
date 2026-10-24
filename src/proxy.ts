@@ -26,6 +26,7 @@ export const config = {
     "/feed/:path*",
     "/posts/:path*",
     "/me/:path*",
+    "/profile/:path*",
     "/login",
     "/register",
   ],

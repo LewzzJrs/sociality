@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { UserAvatar } from "@/components/user-avatar";
 import { FollowButton } from "@/features/profile/follow-button";
+import { useMe } from "@/features/profile/use-me";
 import { useUserList } from "@/features/users/use-user-list";
 
 type UserListDialogProps = {
@@ -52,6 +53,8 @@ export function UserListDialog({
     hasNextPage,
     isFetchingNextPage,
   } = useUserList(path, open);
+  const { data: me } = useMe();
+  const myId = me?.profile.id;
 
   const users = data?.pages.flatMap((page) => page.users) ?? [];
 
@@ -116,7 +119,7 @@ export function UserListDialog({
                       </span>
                     </div>
                   </Link>
-                  {!user.isMe && (
+                  {!user.isMe && user.id !== myId && (
                     <FollowButton
                       username={user.username}
                       isFollowing={user.isFollowedByMe}

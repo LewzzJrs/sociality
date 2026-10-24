@@ -99,3 +99,19 @@ export type PostsData = {
   posts: Post[];
   pagination: Pagination;
 };
+
+export type UserProfile = {
+  id: number;
+  name: string;
+  username: string;
+  bio: string | null;
+  avatarUrl: string | null;
+  counts: {
+    post: number;
+    followers: number;
+    following: number;
+    likes: number;
+  };
+  isFollowing: boolean;
+  isMe: boolean;
+};
