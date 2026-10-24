@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import { UserProfileView } from "@/features/users/user-profile";
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/profile/[username]">): Promise<Metadata> {
+  const { username } = await params;
+  return { title: `${decodeURIComponent(username)} | Sociality` };
+}
 
 export default async function ProfilePage({
   params,

@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sociality
 
-## Getting Started
+A social media web app where people share photos, follow each other, and like, comment on, and save posts. Built as a frontend MVP on top of the Sociality REST API.
 
-First, run the development server:
+## Features
+
+- **Auth**: register and login with validation; JWT stored in a cookie; protected routes via `proxy.ts`
+- **Feed**: posts from people you follow, infinite scroll, "Show More" captions
+- **Post actions**: optimistic like, save and follow; copy post link; list of people who liked a post
+- **Post detail**: modal (and `/posts/[id]` page) with comments, emoji picker, and deleting your own comments or posts
+- **Add Post**: image upload by click or drag and drop, preview, caption
+- **My Profile**: stats, followers/following lists, Gallery and Saved tabs, Edit Profile with photo upload
+- **User profile**: follow/unfollow, Gallery and Liked tabs
+- **Search**: find users by name or username from the header
+
+## Tech stack
+
+- [Next.js](https://nextjs.org) (App Router) + TypeScript
+- Tailwind CSS + [shadcn/ui](https://ui.shadcn.com)
+- [TanStack Query](https://tanstack.com/query) for server state and optimistic updates
+- React Hook Form + Zod for forms and validation
+- Day.js for relative time, Sonner for toasts
+
+## Getting started
+
+Requirements: Node.js 20+ and npm.
 
 ```bash
+npm install
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Name                  | Description                   |
+| --------------------- | ----------------------------- |
+| `NEXT_PUBLIC_API_URL` | Base URL of the Sociality API |
 
-## Learn More
+## Scripts
 
-To learn more about Next.js, take a look at the following resources:
+| Command         | Description              |
+| --------------- | ------------------------ |
+| `npm run dev`   | Start the dev server     |
+| `npm run build` | Build for production     |
+| `npm run start` | Run the production build |
+| `npm run lint`  | Lint with ESLint         |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+  app/          routes: (auth) login/register, (main) feed, posts, me, profile
+  components/   shared UI (header, search, bottom menu, shadcn/ui)
+  features/     feature modules: auth, feed, posts, comments, profile, users
+  hooks/        reusable hooks (infinite scroll, debounce)
+  lib/          API client, token, date, image and clipboard helpers
+  types/        API response types
+  proxy.ts      route protection
+```

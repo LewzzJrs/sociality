@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PostDetail } from "@/features/posts/post-detail";
+
+export const metadata: Metadata = {
+  title: "Post | Sociality",
+};
 
 export default async function PostPage({ params }: PageProps<"/posts/[id]">) {
   const { id } = await params;

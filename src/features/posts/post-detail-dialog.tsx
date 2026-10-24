@@ -34,7 +34,11 @@ export function PostDetailDialog({
         <DialogDescription className="sr-only">
           Post detail with comments
         </DialogDescription>
-        <PostDetail postId={postId} initialPost={initialPost} />
+        <PostDetail
+          postId={postId}
+          initialPost={initialPost}
+          onDeleted={() => onOpenChange(false)}
+        />
         <DialogClose className="absolute top-3 right-3 z-10 rounded-full bg-black/60 p-1.5 lg:-top-12 lg:right-0 lg:bg-transparent lg:p-0">
           <X className="size-6" />
           <span className="sr-only">Close</span>
